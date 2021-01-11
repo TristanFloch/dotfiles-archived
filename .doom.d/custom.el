@@ -71,7 +71,9 @@
  '(org-todo-keywords
    '((type "TODO(t)" "PROGRESS(i)" "PROJ(p)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "CANCELLED(k)")
      (sequence "[ ](T)" "[-](P)" "[?](W)" "|" "[X](D)")))
- '(safe-local-variable-values '((projectile-project-compilation-dir . build))))
+ '(safe-local-variable-values '((projectile-project-compilation-dir . build)))
+ '(yas-snippet-dirs
+   '(+snippets-dir doom-snippets-dir +file-templates-dir "/home/tristan/.doom.d/snippets/")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

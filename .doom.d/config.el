@@ -104,8 +104,11 @@
 ;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
   (setq org-agenda-span 'week)
-  (setq org-agenda-start-on-weekday 1)
   (setq org-agenda-start-with-log-mode '(clock)))
 
 (add-to-list 'org-latex-packages-alist
              '("AUTO" "babel" t ("pdflatex")))
+
+(magit-define-popup-switch 'magit-push-popup
+  ?c "Follow tags" "--follow-tags")
+
