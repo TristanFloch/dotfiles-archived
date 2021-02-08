@@ -7,11 +7,12 @@ set fish_greeting
 
 # Aliases
 alias proj "cd $HOME/Documents/programmation/projects/"
+alias cpp "cd $HOME/Documents/programmation/cpp_workshop/"
 alias swim "cd $HOME/Documents/programmation/piscine/tristan.floch-piscine-2023/"
 alias bch "bluetoothctl connect 38:18:4C:4B:BB:6A"
+alias bdh "bluetoothctl disconnect 38:18:4C:4B:BB:6A"
 alias 42 "proj; cd 42sh/"
 alias pol "$HOME/.config/polybar/launch.sh"
-alias sql "cd $HOME/Documents/programmation/sql_workshop/"
 alias config "git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME"
 # alias 'git log' "git log --oneline --decorate --graph"
 

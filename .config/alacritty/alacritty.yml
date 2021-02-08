@@ -189,7 +189,9 @@ colors:
   # Default colors
   primary:
     background: '#030408'
-    foreground: '#A0B3C5'
+    # foreground: '#A0B3C5'
+    # background: '#181e24'
+    foreground: '#b7c5d3'
 
 
     # Bright and dim foreground colors
@@ -232,75 +234,43 @@ colors:
     text: '#5963a2'
     background: '#f6f6f6'
 
-  # Search colors
-  #
-  # Colors used for the search bar and match highlighting.
-  #search:
-    # Allowed values are CellForeground and CellBackground, which reference the
-    # affected cell, or hexadecimal colors like #ff00ff.
-    #matches:
-    #  foreground: '#000000'
-    #  background: '#ffffff'
-    #focused_match:
-    #  foreground: CellBackground
-    #  background: CellForeground
-
-    #bar:
-    #  background: '#c5c8c6'
-    #  foreground: '#1d1f21'
-
-  # # Normal colors
-  # normal:
-  #   black:   '#1d1f21'
-  #   red:     '#cc6666'
-  #   green:   '#b5bd68'
-  #   yellow:  '#e6c547'
-  #   blue:    '#81a2be'
-  #   magenta: '#b294bb'
-  #   cyan:    '#70c0ba'
-  #   white:   '#373b41'
-
- # # Bright colors
-  # bright:
-  #   black:   '#666666'
-  #   red:     '#ff3334'
-  #   green:   '#9ec400'
-  #   yellow:  '#f0c674'
-  #   blue:    '#81a2be'
-  #   magenta: '#b77ee0'
-  #   cyan:    '#54ced6'
-  #   white:   '#282a2e'
-
-
-# colors:
-#       # Default colors
-#   primary:
-#     background: '#030408'
-#     foreground: '#a9c6d9'
-    # background: '#263238'
-    # foreground: '#eeffff'
-
 # Normal colors
   normal:
-    black:   '#000000'  # Arbitrary
-    red:     '#e53935'
-    green:   '#91b859'
-    yellow:  '#ffb62c'
-    blue:    '#6182b8'
-    magenta: '#ff5370'  # Dark pink of the original material theme
-    cyan:    '#39adb5'
-    white:   '#a0a0a0'  # Arbitrary
+    # black:   '#000000'  # Arbitrary
+    # red:     '#e53935'
+    # green:   '#91b859'
+    # yellow:  '#ffb62c'
+    # blue:    '#6182b8'
+    # magenta: '#ff5370'  # Dark pink of the original material theme
+    # cyan:    '#39adb5'
+    # white:   '#a0a0a0'  # Arbitrary
+    black: '#333f4a'
+    red: '#d95468'
+    green: '#8bd49c'
+    yellow: '#ebbf83'
+    blue: '#539afc'
+    magenta: '#b62d65'
+    cyan: '#70e1e8'
+    white: '#718ca1'
 
 # Bright colors
   bright:
-    black:   '#4e4e4e'  # Arbitrary
-    red:     '#ff5370'
-    green:   '#c3e88d'
-    yellow:  '#ffcb6b'
-    blue:    '#82aaff'
-    magenta: '#f07178'  # Pink of the original material theme
-    cyan:    '#89ddff'
-    white:   '#ffffff'  # Arbitrary
+    # black:   '#4e4e4e'  # Arbitrary
+    # red:     '#ff5370'
+    # green:   '#c3e88d'
+    # yellow:  '#ffcb6b'
+    # blue:    '#82aaff'
+    # magenta: '#f07178'  # Pink of the original material theme
+    # cyan:    '#89ddff'
+    # white:   '#ffffff'  # Arbitrary
+    black: '#41505e'
+    red: '#d95468'
+    green: '#8bd49c'
+    yellow: '#f7dab3'
+    blue: '#5ec4ff'
+    magenta: '#b62d65'
+    cyan: '#70e1e8'
+    white: '#b7c5d3'
 
 # Dim colors
 #
@@ -371,8 +341,8 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.80
-  # background_opacity: 1.0
+# background_opacity: 0.80
+# background_opacity: 1.0
 
 #selection:
   # This string contains all characters that are used as separators for

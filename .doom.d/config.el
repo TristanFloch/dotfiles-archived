@@ -25,11 +25,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-city-lights)
+(setq doom-theme 'doom-moonlight)
 ;; (setq doom-theme 'doom-dracula)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-material)
-(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 18))
+(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 17))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -109,6 +109,14 @@
 (add-to-list 'org-latex-packages-alist
              '("AUTO" "babel" t ("pdflatex")))
 
-(magit-define-popup-switch 'magit-push-popup
-  ?c "Follow tags" "--follow-tags")
+;; (after! magit
+;;   (magit-define-popup-switch 'magit-push-popup
+;;    ?c "Follow tags" "--follow-tags"))
 
+(add-hook 'c++-mode-hook (lambda () (setq
+                                     flycheck-checker 'c/c++-clang
+                                     flycheck-gcc-language-standard "c++17"
+                                     flycheck-clang-language-standard "c++17"
+                                     flycheck-clang-pedantic t
+                                     flycheck-gcc-pedantic t
+                                     flycheck-clang-warnings (append '("no-pragma-once-outside-header") flycheck-clang-warnings))))
