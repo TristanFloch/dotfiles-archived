@@ -12,6 +12,7 @@ alias swim "cd $HOME/Documents/programmation/piscine/tristan.floch-piscine-2023/
 alias bch "bluetoothctl connect 38:18:4C:4B:BB:6A"
 alias bdh "bluetoothctl disconnect 38:18:4C:4B:BB:6A"
 alias 42 "proj; cd 42sh/"
+alias spider "proj; cd spider/"
 alias pol "$HOME/.config/polybar/launch.sh"
 alias config "git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME"
 # alias 'git log' "git log --oneline --decorate --graph"

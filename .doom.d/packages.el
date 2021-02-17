@@ -52,3 +52,4 @@
 (package! org-superstar)
 (package! clang-format)
 (package! org-gcal)
+(package! org-download)

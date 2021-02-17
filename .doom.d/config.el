@@ -113,10 +113,22 @@
 ;;   (magit-define-popup-switch 'magit-push-popup
 ;;    ?c "Follow tags" "--follow-tags"))
 
-(add-hook 'c++-mode-hook (lambda () (setq
-                                     flycheck-checker 'c/c++-clang
-                                     flycheck-gcc-language-standard "c++17"
-                                     flycheck-clang-language-standard "c++17"
-                                     flycheck-clang-pedantic t
-                                     flycheck-gcc-pedantic t
-                                     flycheck-clang-warnings (append '("no-pragma-once-outside-header") flycheck-clang-warnings))))
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (setq
+             flycheck-checker 'c/c++-clang
+             flycheck-gcc-language-standard "c++17"
+             flycheck-clang-language-standard "c++17"
+             flycheck-clang-pedantic t
+             flycheck-gcc-pedantic t
+             flycheck-clang-warnings (append
+                                      '("no-pragma-once-outside-header")
+                                      flycheck-clang-warnings))))
+
+
+
+(require 'org-download)
+(add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
+(add-hook 'org-mode-hook 'org-download-enable)
+(setq-default org-download-image-dir "./.images/")
+(setq-default org-download-heading-lvl nil)
