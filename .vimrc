@@ -73,7 +73,7 @@ ab #d #define
 ab #a assert_eq!(
 
 " File search on space space
-map <Space><Space> <Esc><Esc>:Files<CR>
+map <Space><Space> <Esc><Esc>:GFiles<CR>
 
 " clang-format on save
 autocmd Filetype c ClangFormatAutoEnable
