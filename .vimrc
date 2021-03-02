@@ -20,6 +20,9 @@ Plug 'junegunn/fzf.vim'
 " Clang format on save
 Plug 'rhysd/vim-clang-format'
 
+" Machine learning powered completion
+Plug 'codota/tabnine-vim'
+
 " Initialize plugin system
 call plug#end()
 

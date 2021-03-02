@@ -64,7 +64,7 @@ bindsym XF86AudioPause exec "sp pause"
 # Start Applications
 bindsym $mod+F1 exec emacsclient -c
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec firefox
+bindsym $mod+F2 exec brave
 bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
@@ -296,7 +296,7 @@ exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker blurlock -notify 30 -notifier dunst
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 

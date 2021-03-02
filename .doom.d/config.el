@@ -25,10 +25,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-moonlight)
-;; (setq doom-theme 'doom-dracula)
+;; (setq doom-theme 'doom-moonlight)
+(setq doom-theme 'doom-ayu-mirage)
 ;; (setq doom-theme 'doom-vibrant)
-;; (setq doom-theme 'doom-material)
 (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 17))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -68,7 +67,11 @@
                   :prepend t))
   (add-to-list 'org-capture-templates
                '("a" "Appointment" entry (file "gcal.org")
-                 "* %?\n%^T\n\n:PROPERTIES:\n:END:\n"))) ;; Date needs to be set twice
+                 "* %?\n%^T\n\n:PROPERTIES:\n:END:\n")) ;; Date needs to be set twice
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               (append org-babel-load-languages
+                                       '((scala . t))))
+  )
 
 ;; Syncs gcal after capturing an appointment
 ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
@@ -86,20 +89,15 @@
 (require 'clang-format)
 (global-set-key [C-M-tab] 'clang-format-buffer)
 
-(setq clang-format-style-option "file")
-
 ;; Change the binding of the Org capture
 (map! :leader
       :desc "Org Capture"           "x" #'org-capture
       :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer)
 
-
 (require 'org-gcal)
 (setq org-gcal-client-id "517191471377-0g7snp1jneht2s8tmqth900nf13t9vbl.apps.googleusercontent.com"
       org-gcal-client-secret "fZNQra_7a10Zqd4CIx8mBpKU"
       org-gcal-file-alist '(("tristan.floch@gmail.com" .  "~/Documents/orgfiles/gcal.org")))
-
-
 
 ;; Weekly view in the agenda and log of what I've done during the day
 (after! org-agenda
@@ -109,12 +107,9 @@
 (add-to-list 'org-latex-packages-alist
              '("AUTO" "babel" t ("pdflatex")))
 
-;; (after! magit
-;;   (magit-define-popup-switch 'magit-push-popup
-;;    ?c "Follow tags" "--follow-tags"))
-
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable) ;; Drag-and-drop to `dired`
 (add-hook 'org-mode-hook 'org-download-enable)
 (setq-default org-download-image-dir "./.images/")
 (setq-default org-download-heading-lvl nil)
+

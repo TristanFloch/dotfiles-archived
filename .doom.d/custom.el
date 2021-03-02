@@ -65,7 +65,8 @@
  %a" :prepend t :heading "Changelog")))
  '(org-format-latex-options
    '(:foreground default :background default :scale 1.7 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
+     ("begin" "$1" "$" "$$" "\\(" "\\[")))
+ '(org-startup-folded 'content)
  '(org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %H:%M>"))
  '(org-todo-keyword-faces
    '(("[-]" . +org-todo-active)
