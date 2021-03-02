@@ -68,9 +68,6 @@
   (add-to-list 'org-capture-templates
                '("a" "Appointment" entry (file "gcal.org")
                  "* %?\n%^T\n\n:PROPERTIES:\n:END:\n")) ;; Date needs to be set twice
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               (append org-babel-load-languages
-                                       '((scala . t))))
   )
 
 ;; Syncs gcal after capturing an appointment
@@ -85,7 +82,7 @@
 ;; (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
 
 ;; Clang stuff
-(load "/usr/share/clang/clang-format.el")
+(load! "/usr/share/clang/clang-format.el")
 (require 'clang-format)
 (global-set-key [C-M-tab] 'clang-format-buffer)
 
