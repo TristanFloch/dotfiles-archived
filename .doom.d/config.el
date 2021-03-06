@@ -110,3 +110,5 @@
 (setq-default org-download-image-dir "./.images/")
 (setq-default org-download-heading-lvl nil)
 
+(add-hook! (c-mode c++-mode)
+           (setq c-default-style "bsd"))
