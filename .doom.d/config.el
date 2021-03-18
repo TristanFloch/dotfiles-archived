@@ -61,7 +61,12 @@
   (setq org-ellipsis " ▾"
         org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶"))
   (add-to-list 'org-capture-templates
-               '("l" "Links" entry (file+headline "links.org" "Links")
+               '("b" "Book" entry (file+headline "books.org" "Books")
+                 "* %^{Author} - %^{Title} %^g:%\1:\n"
+                 :prepend t
+                 :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("l" "Link" entry (file+headline "links.org" "Links")
                   "* %x %^g\n"
                   :immediate-finish t
                   :prepend t))
@@ -112,3 +117,10 @@
 
 (add-hook! (c-mode c++-mode)
            (setq c-default-style "bsd"))
+
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "Doom modeline" "m" #'doom-modeline-mode))
+
+;; (after! lsp-mode
+;;   'lsp-headerline-breadcrumb-enable)

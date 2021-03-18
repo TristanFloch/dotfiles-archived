@@ -11,7 +11,11 @@
  '(flycheck-clang-warnings '("all" "extra" "no-pragma-once-outside-header"))
  '(org-agenda-files '("~/Documents/orgfiles/"))
  '(org-capture-templates
-   '(("a" "Appointment" entry
+   '(("t" "Personal todo" entry
+      (file+headline +org-capture-todo-file "Inbox")
+      "* TODO %?
+%i" :prepend t)
+     ("a" "Appointment" entry
       (file "gcal.org")
       "* %?
 %^T
@@ -19,14 +23,14 @@
 :PROPERTIES:
 :END:
 ")
-     ("l" "Links" entry
+   ("l" "Link" entry
       (file+headline "links.org" "Links")
       "* %x %^g
 " :prepend t :immediate-finish t)
-     ("t" "Personal todo" entry
-      (file+headline +org-capture-todo-file "Inbox")
-      "* TODO %?
-%i" :prepend t)
+     ("b" "Book" entry
+      (file+headline "books.org" "Books")
+      "* %^{Author} - %^{Title} %^g\n
+" :prepend t :immediate-finish t)
      ("n" "Personal notes" entry
       (file+headline +org-capture-notes-file "Inbox")
       "* %u %?
