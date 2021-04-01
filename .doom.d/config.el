@@ -25,10 +25,25 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-moonlight)
-(setq doom-theme 'doom-ayu-mirage)
-;; (setq doom-theme 'doom-vibrant)
+
+;; (setq doom-theme 'doom-ayu-mirage)
+(setq doom-theme 'doom-vibrant)
+(setq doom-vibrant-padded-modeline t)
+(doom-themes-org-config)
+;; (setq doom-themes-treemacs-theme "doom-colors")
+;; (setq doom-themes-treemacs-enable-variable-pitch nil)
+
+;; custom color for one theme
+;; (after! solaire-mode
+;;   (solaire-global-mode -1))
+;; (custom-set-faces
+;;   '(default ((t (:background "#000000"))))
+;;   '(hl-line ((t (:background "#000000"))))
+;;  )
+
 (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 17))
+
+;; (display-battery-mode t)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -81,15 +96,10 @@
 (after! company
   (setq company-idle-delay 0))
 
-;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
-;;(set-frame-parameter (selected-frame) 'alpha <both>)
-;; (set-frame-parameter (selected-frame) 'alpha '(95 . 85))
-;; (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
-
-;; Clang stuff
-(load! "/usr/share/clang/clang-format.el")
-(require 'clang-format)
-(global-set-key [C-M-tab] 'clang-format-buffer)
+;; (set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;; (set-frame-parameter (selected-frame) 'alpha <both>)
+;; (set-frame-parameter (selected-frame) 'alpha '(85 . 85))
+;; (add-to-list 'default-frame-alist '(alpha . (85 . 85)))
 
 ;; Change the binding of the Org capture
 (map! :leader
@@ -116,11 +126,26 @@
 (setq-default org-download-heading-lvl nil)
 
 (add-hook! (c-mode c++-mode)
-           (setq c-default-style "bsd"))
+  (setq c-default-style "bsd"))
+
+(load! "/usr/share/clang/clang-format.el")
+(require 'clang-format)
+(map! :after cc-mode
+      :map c++-mode-map
+      :leader
+      (:prefix-map ("c" . "code")
+      :desc "Format buffer" "f" 'clang-format-buffer))
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
        :desc "Doom modeline" "m" #'doom-modeline-mode))
 
-;; (after! lsp-mode
-;;   'lsp-headerline-breadcrumb-enable)
+
+(after! lsp-mode
+  (setq! lsp-headerline-breadcrumb-segments '(project file symbols))
+  (setq! lsp-headerline-breadcrumb-enable t)
+  )
+
+;; (map! :after neotree-mode
+;;       :map neotree-mode-map
+;;       "v" #'neotree-enter-vertical-split)

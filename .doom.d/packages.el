@@ -53,3 +53,4 @@
 (package! clang-format)
 (package! org-gcal)
 (package! org-download)
+(package! ada-mode)

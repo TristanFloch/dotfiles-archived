@@ -23,6 +23,12 @@ Plug 'rhysd/vim-clang-format'
 " Machine learning powered completion
 Plug 'codota/tabnine-vim'
 
+" Theme
+Plug 'drewtempelmeyer/palenight.vim'
+
+" Modeline
+Plug 'itchyny/lightline.vim'
+ 
 " Initialize plugin system
 call plug#end()
 
@@ -39,7 +45,7 @@ set wmnu             " Completion dans la barre de commandes
 set listchars=tab:\ \ ,eol:$    " Keep EOF and delete ^I
 set splitbelow splitright       " Make split more intuitive
 set novisualbell     " Desactive le flash de l'ecran (ex sur echap + echap)
-set scrolloff=22     " Arret du scroll n lignes avant le debut/fin du fichier
+set scrolloff=10     " Arret du scroll n lignes avant le debut/fin du fichier
 set list             " End of line $ char
 set showmode         " Show mode
 " set cursorline       " Highlight the current line
@@ -77,6 +83,19 @@ ab #a assert_eq!(
 
 " File search on space space
 map <Space><Space> <Esc><Esc>:GFiles<CR>
+
+" Modeline
+set laststatus=2
+
+" Colorscheme
+" if (has("termguicolors"))
+"   set termguicolors
+" endif
+let g:palenight_color_overrides = {
+\    'black': { 'gui': 'NONE', "cterm": "NONE", "cterm16": "NONE" },
+\}
+let g:lightline = { 'colorscheme': 'palenight' }
+colorscheme palenight
 
 " clang-format on save
 autocmd Filetype c ClangFormatAutoEnable
