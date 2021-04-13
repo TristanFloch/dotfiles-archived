@@ -1,0 +1,15 @@
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+
+nnoremap <leader>bs :update<CR>
+nnoremap <leader>ps :wa<CR>
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>ww <C-w>w
+nnoremap <leader>wv <C-w>v
+nnoremap <leader>ws <C-w>s
+nnoremap <leader>wc <C-w>c
+nnoremap <leader>ss /
+nnoremap <leader>bk :q<CR>

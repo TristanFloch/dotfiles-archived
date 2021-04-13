@@ -16,7 +16,7 @@ alias spider "proj; cd spider/"
 alias chess "proj; cd chess/"
 alias pol "$HOME/.config/polybar/launch.sh"
 alias config "git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME"
-# alias 'git log' "git log --oneline --decorate --graph"
+alias javel "cd $HOME/Documents/programmation/java_workshop/"
 
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
@@ -26,6 +26,7 @@ alias cp="cp -i"
 
 # env variable for doom emacs
 set -x EMACSDIR ~/.emacs.d
+set PATH $PATH ~/.emacs.d/bin/
 
 set PATH $PATH /home/tristan/.local/bin
 

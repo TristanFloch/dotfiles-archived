@@ -63,6 +63,7 @@ set smartindent      " Active 'smart-indent' (améliore l'auto-indentation, nota
 set smarttab         " Active 'smart-tabs' (améliore l'auto-indentation, Gestion des espaces en début de ligne pour l'auto-indentation)
 set shiftwidth=4     " (auto) Indentation de 4 espaces
 filetype indent on   " Load indent file for specific file type
+set showcmd          " Show the shortcut being typed
 
 " Search
 "set hlsearch        " Surligne tous les résultats de la recherche
@@ -80,9 +81,6 @@ command Q q
 ab #i #include
 ab #d #define
 ab #a assert_eq!(
-
-" File search on space space
-map <Space><Space> <Esc><Esc>:GFiles<CR>
 
 " Modeline
 set laststatus=2
@@ -104,3 +102,21 @@ autocmd Filetype cpp ClangFormatAutoEnable
 " GDB in vim
 let g:termdebug_popup = 0
 let g:termdebug_wide = 163
+
+" Doom emacs bindings
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+
+map <leader><leader> <esc><esc>:GFiles<CR>
+nnoremap <leader>bs :update<CR>
+nnoremap <leader>ps :wa<CR>
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>ww <C-w>w
+nnoremap <leader>wv <C-w>v
+nnoremap <leader>ws <C-w>s
+nnoremap <leader>wc <C-w>c
+nnoremap <leader>ss /
+nnoremap <leader>bk :q<CR>

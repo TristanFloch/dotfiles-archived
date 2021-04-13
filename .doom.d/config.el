@@ -26,12 +26,15 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-;; (setq doom-theme 'doom-ayu-mirage)
-(setq doom-theme 'doom-vibrant)
-(setq doom-vibrant-padded-modeline t)
+(setq doom-theme 'doom-palenight)
+(setq doom-palenight-padded-modeline t)
+;; (setq doom-theme 'doom-vibrant)
+;; (setq doom-vibrant-padded-modeline t)
 (doom-themes-org-config)
-;; (setq doom-themes-treemacs-theme "doom-colors")
-;; (setq doom-themes-treemacs-enable-variable-pitch nil)
+(setq doom-themes-treemacs-theme "doom-colors")
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+(after! treemacs
+  (setq treemacs-show-cursor t))
 
 ;; custom color for one theme
 ;; (after! solaire-mode
@@ -130,11 +133,11 @@
 
 (load! "/usr/share/clang/clang-format.el")
 (require 'clang-format)
-(map! :after cc-mode
-      :map c++-mode-map
+(map! :after lsp-mode
+      :map prog-mode-map
       :leader
       (:prefix-map ("c" . "code")
-      :desc "Format buffer" "f" 'clang-format-buffer))
+       :desc "Format buffer" "f" #'lsp-format-buffer))
 
 (map! :leader
       (:prefix-map ("t" . "toggle")
@@ -149,3 +152,64 @@
 ;; (map! :after neotree-mode
 ;;       :map neotree-mode-map
 ;;       "v" #'neotree-enter-vertical-split)
+
+(with-eval-after-load 'compile
+  (define-key compilation-mode-map (kbd "h") nil)
+  (define-key compilation-mode-map (kbd "0") nil)
+  (setq compilation-scroll-output t))
+
+(setq mu4e-get-mail-command "mbsync -c ~/.config/mu4e/mbsyncrc -a"
+      mu4e-update-interval  300
+      message-send-mail-function 'smtpmail-send-it
+      mu4e-maildir-shortcuts
+      '(("/epita-mail/Inbox"  . ?i)
+        ("/epita-mail/Sent"   . ?s)
+        ("/epita-mail/Drafts" . ?d)
+        ("/epita-mail/Trash"  . ?t)))
+
+(remove-hook! 'mu4e-compose-pre-hook #'org-msg-mode)
+
+(set-email-account! "epita"
+                    '(
+                      (mu4e-sent-folder         . "/epita-mail/Sent")
+                      (mu4e-drafts-folder       . "/epita-mail/Drafts")
+                      (mu4e-trash-folder        . "/epita-mail/Trash")
+                      (smtpmail-smtp-server     . "smtp.office365.com")
+                      (smtpmail-smtp-service    . 587)
+                      (smtpmail-stream-type     . starttls)
+                      (user-mail-address        . "tristan.floch@epita.fr")
+                      )
+                    t)
+
+(defconst message-cite-style-custom
+  '((message-cite-function          'message-cite-original-without-signature)
+    (message-citation-line-function 'message-insert-formatted-citation-line)
+    (message-cite-reply-position    'traditional)
+    (message-yank-prefix            "> ")
+    (message-yank-cited-prefix      "> ")
+    (message-yank-empty-prefix      ">")
+    (message-citation-line-format   "%f writes:"))
+  "Message citation style used for email. Use with `message-cite-style'.")
+
+(after! message
+  (setq message-cite-style message-cite-style-custom
+        message-cite-function          'message-cite-original-without-signature
+        message-citation-line-function 'message-insert-formatted-citation-line
+        message-cite-reply-position    'traditional
+        message-yank-prefix            "> "
+        message-yank-cited-prefix      "> "
+        message-yank-empty-prefix      ">"
+        message-citation-line-format   "%f writes:"))
+
+(after! mu4e
+  (setq mu4e-compose-format-flowed nil
+        mu4e-view-use-gnus t))
+
+(setq gnus-fetch-old-headers t) ;; show unread groups
+(setq gnus-select-method '(nntp "news.epita.fr"))
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+       :desc "Gnus" "g" #'gnus))
+
+;; (map! )
