@@ -60,8 +60,8 @@ font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=9;3"
 font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=9;3"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;3"
 font-5 = "UbuntuMono Nerd Font:size=11;4"
-; font-6 = "FontAwesome5Free:style=Solid:pixelsize=10:antialias=false;3"
-; font-7 = "Wuncon Siji:size=11;1"
+; font-6 = "unifont:fontformat=truetype:size=8:antialias=false;4"
+; font-7 = "Siji:pixelsize=11;1"
 
 modules-left = i3
 modules-center = spotify
@@ -159,29 +159,38 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %icon%
 label-focused-background = ${colors.background-alt}
 label-focused-overline= ${colors.primary}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
+label-unfocused = %icon%
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%
+label-visible = %icon%
 label-visible-background = ${self.label-focused-background}
 ; label-visible-overline = ${self.label-focused-overline}
 label-visible-overline = ${colors.secondary}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %icon%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
+
+ws-icon-0 = 1;1
+ws-icon-1 = 2;2
+ws-icon-2 = 3;3
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 6;6
+ws-icon-6 = 7;
+ws-icon-7 = 8;
 
 
 [module/mpd]

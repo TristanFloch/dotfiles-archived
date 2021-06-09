@@ -14,6 +14,7 @@ alias bdh "bluetoothctl disconnect 38:18:4C:4B:BB:6A"
 alias 42 "proj; cd 42sh/"
 alias spider "proj; cd spider/"
 alias chess "proj; cd chess/"
+alias ping "proj; cd ping/"
 alias pol "$HOME/.config/polybar/launch.sh"
 alias config "git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME"
 alias javel "cd $HOME/Documents/programmation/java_workshop/"
@@ -25,8 +26,8 @@ alias grep='grep --color=auto'
 alias cp="cp -i"
 
 # env variable for doom emacs
-set -x EMACSDIR ~/.emacs.d
-set PATH $PATH ~/.emacs.d/bin/
+set -x EMACSDIR ~/.emacs.d.doom
+# set PATH $PATH ~/.emacs.d/bin/
 
 set PATH $PATH /home/tristan/.local/bin
 

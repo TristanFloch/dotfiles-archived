@@ -44,7 +44,7 @@
 ;;   '(hl-line ((t (:background "#000000"))))
 ;;  )
 
-(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 17))
+(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 16))
 
 ;; (display-battery-mode t)
 
@@ -212,4 +212,5 @@
       (:prefix-map ("o" . "open")
        :desc "Gnus" "g" #'gnus))
 
+(setq js2-basic-offset 2)
 ;; (map! )

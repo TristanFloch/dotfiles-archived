@@ -54,3 +54,4 @@
 (package! org-gcal)
 (package! org-download)
 (package! ada-mode)
+(package! arduino-mode)
