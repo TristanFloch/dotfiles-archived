@@ -29,21 +29,6 @@
   (auto-package-update-maybe))
 #+end_src
 
-* Evil mode
-#+begin_src emacs-lisp
-(use-package evil
-  :init      ;; tweak evil's configuration before loading it
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (evil-mode))
-(use-package evil-collection
-  :after evil
-  :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (evil-collection-init))
-#+end_src
 * Appearance
 ** Icons
 #+begin_src emacs-lisp
@@ -54,7 +39,7 @@
 (use-package doom-themes)
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
-(load-theme 'doom-gruvbox t)
+(load-theme 'doom-vibrant t)
 #+end_src
 ** Windows decorations off
 #+begin_src emacs-lisp
@@ -118,6 +103,10 @@ Prevent the display of line numbers for some modes:
 		  eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
+** TODO Cursor
+#+begin_src emacs-lisp
+(setq cursor-in-non-selected-windows nil)
+#+end_src
 
 * Which Key
 #+begin_src emacs-lisp
@@ -132,23 +121,115 @@ Prevent the display of line numbers for some modes:
 (which-key-mode)
 #+end_src
 
-* TODO Key bindings
+* Key bindings
+** Better escape
 Make ESC qui prompts.
 #+begin_src emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
-
+** Evil mode
 #+begin_src emacs-lisp
-(use-package general
-  :config
-  (general-evil-setup t))
+  (use-package evil
+    :init      ;; tweak evil's configuration before loading it
+    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    (setq evil-vsplit-window-right t)
+    (setq evil-split-window-below t)
+    (setq evil-undo-system 'undo-redo)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    )
+
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (setq evil-collection-mode-list '(dashboard dired ibuffer))
+    (evil-collection-init))
+#+end_src
+** General
+#+begin_src emacs-lisp
+  (use-package general
+    :after evil
+    :config
+    (general-create-definer tf/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
+    )
+#+end_src
+** Main leader menu
+#+begin_src emacs-lisp
+  (tf/leader-keys
+   "." '(counsel-find-file :which-key "Find file")
+   "`" '(evil-switch-to-windows-last-buffer :which-key "Switch to last buffer")
+   )
 #+end_src
 ** Buffers
 #+begin_src emacs-lisp
-;;  (nvmap :prefix "SPC"
-;;    "b b"
-
+  (tf/leader-keys
+   "b" '(:ignore t :which-key "buffers")
+   "bk" '(kill-current-buffer :which-key "Kill buffer")
+  ; "bb" '(ivy-switch-buffer :which-key "Switch workspace buffer")
+   "bB" '(counsel-switch-buffer :which-key "Switch buffer")
+   "bs" '(basic-save-buffer :which-key "Save buffer")
+   )
 #+end_src
+** Search
+#+begin_src emacs-lisp
+  (tf/leader-keys
+    "s" '(:ignore t :which-key "search")
+    ; "ss" '(:which-key "Search buffer")
+    "sb" '(counsel-grep-or-swiper :which-key "Search buffer")
+    )
+#+end_src
+** Toggles
+#+begin_src emacs-lisp
+  (tf/leader-keys
+   "t" '(:ignore t :which-key "toggle")
+   )
+#+end_src
+** Windows
+#+begin_src emacs-lisp
+  (tf/leader-keys
+   "w" '(:ignore t :which-key "window")
+   "ww" 'evil-window-next
+   "wW" 'evil-window-prev
+   "wq" 'evil-quit
+   "wv" 'evil-window-vsplit
+   "ws" 'evil-window-split
+   "wh" 'evil-window-left
+   "wl" 'evil-window-right
+   "wj" 'evil-window-down
+   "wk" 'evil-window-up
+   "wc" 'evil-window-delete
+   )
+#+end_src
+** Help
+#+begin_src emacs-lisp
+  ; (general-define-key
+
+    ; (define-key (current-global-map) (kbd "SPC h")
+    ;   (lookup-key (current-global-map) (kbd "C-h")))
+#+end_src
+** Hydra
+#+begin_src emacs-lisp
+    (use-package hydra
+      :defer t)
+
+    (defhydra hydra-text-scale (:timeout 4)
+      "scale text"
+      ("j" text-scale-increase "in")
+      ("k" text-scale-decrease "out")
+      ("q" nil "quit" :exit t))
+
+      (tf/leader-keys
+	"ts" '(hydra-text-scale/body :which-key "Scale text"))
+#+end_src
+     
 * TODO Dired
 #+begin_src emacs-lisp
 (use-package all-the-icons-dired)
