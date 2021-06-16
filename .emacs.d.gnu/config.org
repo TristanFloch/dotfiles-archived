@@ -1,0 +1,243 @@
+#+TITLE: My literate GNU Emacs config
+#+AUTHOR: Tristan Floch
+
+#+STARTUP: overview
+
+* Package management
+** Setup package.el to work with MELPA, ELPA and ORG
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
+(package-refresh-contents)
+(package-initialize)
+#+end_src
+
+** =use-package=
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+#+end_src
+
+* Evil mode
+#+begin_src emacs-lisp
+(use-package evil
+  :init      ;; tweak evil's configuration before loading it
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (evil-mode))
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
+#+end_src
+* Appearance
+** Icons
+#+begin_src emacs-lisp
+(use-package all-the-icons)
+#+end_src
+** Theme
+#+begin_src emacs-lisp
+(use-package doom-themes)
+(setq doom-themes-enable-bold t
+      doom-themes-enable-italic t)
+(load-theme 'doom-gruvbox t)
+#+end_src
+** Windows decorations off
+#+begin_src emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+end_src
+** Fonts
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil
+  :font "Source Code Pro"
+  :height 125
+  :weight 'medium)
+(set-face-attribute 'variable-pitch nil
+  :font "DejaVu Sans"
+  :height 125
+  :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+  :font "Source Code Pro"
+  :height 125
+  :weight 'medium)
+
+;; Uncomment the following line if line spacing needs adjusting.
+;; (setq-default line-spacing 0.12)
+
+;; Needed if using emacsclient. Otherwise, your fonts will be smaller than expected.
+;; (add-to-list 'default-frame-alist '(font . "Source Code Pro-12"))
+;; changes certain keywords to symbols, such as lamda!
+(setq global-prettify-symbols-mode t)
+#+end_src
+
+*** Zooming in and out
+#+begin_src emacs-lisp
+;; zoom in/out like we do everywhere else.
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+*** Emojis
+#+begin_src emacs-lisp
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+#+end_src
+** Modeline
+#+begin_src emacs-lisp
+  (require 'all-the-icons)
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    :custom ((doom-modeline-height 15)))
+  #+end_src
+** Line and column numbers
+#+begin_src emacs-lisp
+  (column-number-mode)
+  (global-display-line-numbers-mode t)
+#+end_src
+
+Prevent the display of line numbers for some modes:
+#+begin_src emacs-lisp
+  (dolist (mode '(term-mode-hook
+		  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+#+end_src
+
+* Which Key
+#+begin_src emacs-lisp
+(use-package which-key
+  :init
+  (setq which-key-sort-order #'which-key-key-order-alpha
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 6
+        which-key-side-window-slot -10))
+(which-key-mode)
+#+end_src
+
+* TODO Key bindings
+Make ESC qui prompts.
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup t))
+#+end_src
+** Buffers
+#+begin_src emacs-lisp
+;;  (nvmap :prefix "SPC"
+;;    "b b"
+
+#+end_src
+* TODO Dired
+#+begin_src emacs-lisp
+(use-package all-the-icons-dired)
+#+end_src
+
+* Ivy and CoWelcome to the Emacs shell
+** Ivy
+#+begin_src emacs-lisp
+  (use-package ivy
+    :defer 0.1
+    :bind (:map ivy-minibuffer-map
+	   ("C-l" . ivy-alt-done)
+	   ("C-j" . ivy-next-line)
+	   ("C-k" . ivy-previous-line)
+	   :map ivy-switch-buffer-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-l" . ivy-done)
+	   ("C-d" . ivy-switch-buffer-kill)
+	   :map ivy-reverse-i-search-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-d" . ivy-reverse-i-search-kill))
+    :config (ivy-mode 1)
+    )
+#+end_src
+
+** Ivy Rich
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :after ivy
+    :custom
+    (ivy-virtual-abbreviate 'full
+     ivy-rich-switch-buffer-align-virtual-buffer t
+     ivy-rich-path-style 'abbrev)
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer
+				 'ivy-rich-switch-buffer-transformer)
+    (ivy-rich-mode 1)
+  ) ;; this gets us descriptions in M-x.
+#+end_src
+
+** Counsel
+#+begin_src emacs-lisp
+  (use-package counsel
+    :after ivy
+    :config (counsel-mode 1)
+    )
+#+end_src
+
+* M-x tweaks
+The following line removes the annoying ‘^’ in things like counsel-M-x and other ivy/counsel prompts.  The default ‘^’ string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I’m searching for a command without knowing what it begins with though.
+
+#+begin_src emacs-lisp
+(setq ivy-initial-inputs-alist nil)
+#+end_src
+
+Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
+#+begin_src emacs-lisp
+(use-package smex)
+(smex-initialize)
+#+end_src
+
+* Org mode config
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode))
+
+  (setq org-directory "~/Documents/orgfiles/"
+    org-ellipsis " ▼"
+    org-adapt-indentation nil
+    org-edit-src-code-indentation 0)
+#+end_src
+
+* Prog mode
+** Rainbow delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+* Helpful
+#+begin_src emacs-lisp
+(use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+#+end_src
