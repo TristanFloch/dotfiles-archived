@@ -29,24 +29,64 @@
   (auto-package-update-maybe))
 #+end_src
 
+* Files
+** Modules
+#+begin_src emacs-lisp
+  (use-package recentf
+    :config
+    (recentf-mode))
+
+  (use-package sudo-edit)
+#+end_src
+
 * Appearance
 ** Icons
 #+begin_src emacs-lisp
 (use-package all-the-icons)
 #+end_src
+
+** TODO Dashboard
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :init      ;; tweak dashboard config before loading it
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+    ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+    (setq dashboard-startup-banner "~/.emacs.d/emacs-dash.png")  ;; use custom image as banner
+    (setq dashboard-center-content nil) ;; set to 't' for centered content
+    (setq dashboard-items '((recents . 5)
+			    (agenda . 5 )
+			    (bookmarks . 3)
+			    (projects . 3)
+			    (registers . 3)))
+    :config
+    (dashboard-setup-startup-hook)
+    (dashboard-modify-heading-icons '((recents . "file-text")
+				      (bookmarks . "book"))))
+#+end_src
+
+This setting ensures that =emacsclient= always opens on dashboard rather than scratch.
+#+begin_src emacs-lisp
+;;  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+#+end_src
+
 ** Theme
 #+begin_src emacs-lisp
-(use-package doom-themes)
-(setq doom-themes-enable-bold t
-      doom-themes-enable-italic t)
-(load-theme 'doom-vibrant t)
+  (use-package doom-themes
+    :init (load-theme 'doom-horizon t)
+    )
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
 #+end_src
+
 ** Windows decorations off
 #+begin_src emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 #+end_src
+
 ** Fonts
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
@@ -91,6 +131,7 @@
     :init (doom-modeline-mode 1)
     :custom ((doom-modeline-height 15)))
   #+end_src
+
 ** Line and column numbers
 #+begin_src emacs-lisp
   (column-number-mode)
@@ -103,6 +144,7 @@ Prevent the display of line numbers for some modes:
 		  eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
+
 ** TODO Cursor
 #+begin_src emacs-lisp
 (setq cursor-in-non-selected-windows nil)
@@ -182,7 +224,7 @@ Make ESC qui prompts.
 #+begin_src emacs-lisp
   (tf/leader-keys
     "s" '(:ignore t :which-key "search")
-    ; "ss" '(:which-key "Search buffer")
+    "ss" '(counsel-grep-or-swiper :which-key "Search buffer")
     "sb" '(counsel-grep-or-swiper :which-key "Search buffer")
     )
 #+end_src
@@ -190,31 +232,59 @@ Make ESC qui prompts.
 #+begin_src emacs-lisp
   (tf/leader-keys
    "t" '(:ignore t :which-key "toggle")
+   "t w" '(toggle-truncate-lines :which-key "Lines wrapping")
    )
 #+end_src
 ** Windows
+Bind "SPC w" to "C-w".
 #+begin_src emacs-lisp
   (tf/leader-keys
-   "w" '(:ignore t :which-key "window")
-   "ww" 'evil-window-next
-   "wW" 'evil-window-prev
-   "wq" 'evil-quit
-   "wv" 'evil-window-vsplit
-   "ws" 'evil-window-split
-   "wh" 'evil-window-left
-   "wl" 'evil-window-right
-   "wj" 'evil-window-down
-   "wk" 'evil-window-up
-   "wc" 'evil-window-delete
+    "w" '(evil-window-map :which-key "window")
    )
 #+end_src
 ** Help
+Bind "SPC h" to "C-h".
 #+begin_src emacs-lisp
-  ; (general-define-key
+  (tf/leader-keys
+   "h" '(help-command :which-key "help")
+   "ht" '(load-theme :which-key "Load theme")
+  )
 
-    ; (define-key (current-global-map) (kbd "SPC h")
-    ;   (lookup-key (current-global-map) (kbd "C-h")))
+  (general-define-key
+   :keymaps 'help-map
+   ;; allow keys before bound keys in match
+   ;; since binding in a prefix map
+   :wk-full-keys nil
+   ;; make a prefix-command and add description
+   "r" '(:prefix-command tf/reload-prefix-map :which-key "reload")
+   "rr" '((lambda () (interactive) (load-file "~/.emacs.d.gnu/init.el")) :which-key "Reload Emacs config")
+   )
 #+end_src
+** Files
+#+begin_src emacs-lisp
+  (tf/leader-keys
+    "f" '(:ignore t :which-key "file")
+    "f f" '(find-file :which-key "Find file")
+    "f r" '(counsel-recentf :which-key "Recent files")
+    "f C" '(copy-file :which-key "Copy this file")
+    "f s" '(save-buffer :which-key "Save file")
+    "f D" '(delete-file :which-key "Delete this file")
+    "f R" '(rename-file :which-key "Rename/move file")
+    "f u" '(sudo-edit-find-file :which-key "Sudo find file")
+    "f U" '(sudo-edit :which-key "Sudo this file")
+    ;; "f p" TODO
+    )
+#+end_src
+** Quit
+#+begin_src emacs-lisp
+  (tf/leader-keys
+    "q" '(:ignore t :which-key "quit")
+    "qq" '(save-buffers-kill-terminal :which-key "Save and quit Emacs")
+    "qr" '(:ignore t :which-key "reload")
+    "qrR" '((lambda () (interactive) (load-file "~/.emacs.d.gnu/init.el")) :which-key "Reload config only")
+    )
+#+end_src
+
 ** Hydra
 #+begin_src emacs-lisp
     (use-package hydra
@@ -235,7 +305,7 @@ Make ESC qui prompts.
 (use-package all-the-icons-dired)
 #+end_src
 
-* Ivy and CoWelcome to the Emacs shell
+* Ivy and Counsel
 ** Ivy
 #+begin_src emacs-lisp
   (use-package ivy
@@ -292,14 +362,52 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 #+end_src
 
 * Org mode config
+** General variables
+#+begin_src emacs-lisp
+  (setq
+   org-directory "~/Documents/orgfiles/"
+   org-ellipsis " ▼"
+   org-src-fontify-natively t
+   org-src-tab-acts-natively t
+   org-confirm-babel-evaluate nil
+   org-edit-src-code-indentation 0
+   org-blank-before-new-entry (quote ((heading . nil)
+				      (plain-list-item . nil)))
+   )
+#+end_src
+
+** Bullets
 #+begin_src emacs-lisp
   (use-package org-bullets
     :hook (org-mode . org-bullets-mode))
+#+end_src
 
-  (setq org-directory "~/Documents/orgfiles/"
-    org-ellipsis " ▼"
-    org-adapt-indentation nil
-    org-edit-src-code-indentation 0)
+** Source block
+Org-tempo is a package that allows for =<s= followed by TAB to expand to a begin_src tag.  Other expansions available include:
+| Typing the below + TAB | Expands to             |
+|------------------------+------------------------|
+| <a                     | =#+BEGIN_EXPORT ascii= |
+| <c                     | =#+BEGIN_CENTER=       |
+| <C                     | =#+BEGIN_COMMENT=      |
+| <e                     | =#+BEGIN_EXAMPLE=      |
+| <E                     | =#+BEGIN_EXPORT=       |
+| <h                     | =#+BEGIN_EXPORT html=  |
+| <l                     | =#+BEGIN_EXPORT latex= |
+| <q                     | =#+BEGIN_QUOTE=        |
+| <s                     | =#+BEGIN_SRC=          |
+| <v                     | =#+BEGIN_VERSE=        |
+
+#+begin_src emacs-lisp
+(use-package org-tempo
+  :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
+#+end_src
+
+** Table of contents
+#+begin_src emacs-lisp
+  (use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable)
+    )
 #+end_src
 
 * Prog mode
@@ -307,6 +415,26 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+* Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :config (projectile-mode)
+    :custom ((projectile-completion-system 'ivy))
+    )
+
+  (use-package counsel-projectile
+    :after projectile
+    :config (counsel-projectile-mode)
+    )
+#+end_src
+
+* TODO Commenting
+The keybinding needs to be added.
+#+begin_src emacs-lisp
+  (use-package evil-nerd-commenter
+    )
 #+end_src
 
 * Helpful
@@ -322,3 +450,4 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 #+end_src
+
